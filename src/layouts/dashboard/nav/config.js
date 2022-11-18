@@ -12,19 +12,29 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Road Issues',
-    path: '/dashboard/road-issues',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'Accidents',
-    path: '/dashboard/accidents',
+    title: 'Pothole Issues',
+    path: '/dashboard/pothole',
     icon: icon('ic_lock'),
   },
   {
-    title: 'Tenders',
-    path: '/dashboard/tenders',
-    icon: icon('ic_cart'),
+    title: 'Manhole Issues',
+    path: '/dashboard/manhole',
+    icon: icon('ic_lock'),
+  },
+  {
+    title: 'Street Light Issues',
+    path: '/dashboard/street-light',
+    icon: icon('ic_lock'),
+  },
+  {
+    title: 'My Tenders',
+    path: '/dashboard/my-tenders',
+    icon: icon('ic_blog'),
+  },
+  {
+    title: 'Applications',
+    path: '/dashboard/application',
+    icon: icon('ic_blog'),
   },
   // {
   //   title: 'login',

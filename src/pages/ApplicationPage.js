@@ -18,8 +18,8 @@ import USERLIST from '../_mock/user';
 const TABLE_HEAD = [
     { id: 'id', label: 'Quote', alignRight: false },
     { id: 'text', label: 'Description', alignRight: false },
-    // { id: 'pocnum', label: 'Vendor Number', alignRight: false },
-    // { id: 'pocname', label: 'Vendor Name', alignRight: false },
+    // { id: 'pocnum', label: 'POC Number', alignRight: false },
+    // { id: 'pocname', label: 'POC Name', alignRight: false },
     { id: 'status', label: 'Status', alignRight: false },
     { id: '', label: 'See Map' },
     { id: '', label: 'More' },
@@ -56,7 +56,7 @@ function applySortFilter(array, comparator, query) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function TenderPage() {
+export default function ApplicationPage() {
     const [open, setOpen] = useState(null);
 
     const [page, setPage] = useState(0);
@@ -65,7 +65,7 @@ export default function TenderPage() {
 
     const [selected, setSelected] = useState([]);
 
-    const [orderBy, setOrderBy] = useState('id');
+    const [orderBy, setOrderBy] = useState('text');
 
     const [filterName, setFilterName] = useState('');
 
@@ -132,13 +132,13 @@ export default function TenderPage() {
     return (
         <>
             <Helmet>
-                <title> Tenders </title>
+                <title> My Applications </title>
             </Helmet>
 
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" gutterBottom>
-                       Tenders
+                        Tenders
                     </Typography>
                     <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
                         Create a tender

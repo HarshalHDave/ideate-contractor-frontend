@@ -18,8 +18,6 @@ import USERLIST from '../_mock/user';
 const TABLE_HEAD = [
     { id: 'id', label: 'ID', alignRight: false },
     { id: 'text', label: 'Description', alignRight: false },
-    { id: 'pocnum', label: 'POC Number', alignRight: false },
-    { id: 'pocname', label: 'POC Name', alignRight: false },
     { id: 'status', label: 'Status', alignRight: false },
     { id: '', label: 'See Map' },
     { id: '', label: 'More' },
@@ -51,12 +49,12 @@ function applySortFilter(array, comparator, query) {
         return a[1] - b[1];
     });
     if (query) {
-        return filter(array, (_user) => _user.id.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+        return filter(array, (_user) => _user.id.toLowerCase().indexOf(query.toLowerCase()) !== -1 || _user.text.toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function AccidentPage() {
+export default function ManholePage() {
     const [open, setOpen] = useState(null);
 
     const [page, setPage] = useState(0);
@@ -65,7 +63,7 @@ export default function AccidentPage() {
 
     const [selected, setSelected] = useState([]);
 
-    const [orderBy, setOrderBy] = useState('text');
+    const [orderBy, setOrderBy] = useState('id');
 
     const [filterName, setFilterName] = useState('');
 
@@ -83,15 +81,6 @@ export default function AccidentPage() {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
-    };
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = USERLIST.map((n) => n.text);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
     };
 
     const handleClick = (event, text) => {
@@ -132,16 +121,16 @@ export default function AccidentPage() {
     return (
         <>
             <Helmet>
-                <title> Accidents </title>
+                <title> Manhole Issues </title>
             </Helmet>
 
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" gutterBottom>
-                        Accidents
+                        Manholes
                     </Typography>
                     <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                        Reoprt an Accident
+                        Add Manhole
                     </Button>
                 </Stack>
 
@@ -161,13 +150,13 @@ export default function AccidentPage() {
                                 />
                                 <TableBody>
                                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                        const { id, text, pocname, status, pocnum, avatarUrl } = row;
+                                        const { id, text, status, avatarUrl } = row;
                                         const selectedUser = selected.indexOf(text) !== -1;
 
                                         return (
                                             <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                                                 <TableCell padding="checkbox">
-                                                    {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, text)} /> */}
+                                                    <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, text)} />
                                                 </TableCell>
 
                                                 <TableCell component="th" scope="row" padding="none">
@@ -180,11 +169,6 @@ export default function AccidentPage() {
                                                 </TableCell>
 
                                                 <TableCell align="left">{text}</TableCell>
-
-                                                <TableCell align="left">{pocnum}</TableCell>
-
-                                                <TableCell align="left">{pocname}</TableCell>
-
 
                                                 <TableCell align="left">
                                                     <Label color={(status === 'unresolved' && 'error') || 'success'}>{sentenceCase(status)}</Label>
@@ -269,13 +253,13 @@ export default function AccidentPage() {
                 }}
             >
                 <MenuItem sx={{ color: 'success.main' }}>
-                    <Iconify icon={'material-symbols:done-rounded'} sx={{ mr: 2 }} />
-                    Resolved
+                    <Iconify icon={'material-symbols:edit-document-outline-rounded'} sx={{ mr: 2 }} />
+                    Apply
                 </MenuItem>
-
+                
                 <MenuItem sx={{ color: 'error.main' }}>
-                    <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-                    Delete
+                    <Iconify icon={'fluent-emoji-high-contrast:cross-mark'} sx={{ mr: 2 }} />
+                    Unresolve
                 </MenuItem>
             </Popover>
         </>

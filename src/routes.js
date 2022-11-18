@@ -4,9 +4,11 @@ import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
 import BlogPage from './pages/BlogPage';
-import RoadIssuePage from './pages/RoadIssuePage';
-import AccidentPage from './pages/AccidentsPage';
+import PotholePage from './pages/PotholePage';
+import StreetLightPage from './pages/StreetLightPage';
+import ManholePage from './pages/ManholePage';
 import TenderPage from './pages/TenderPage';
+import ApplicationPage from './pages/ApplicationPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
@@ -22,9 +24,11 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'road-issues', element: <RoadIssuePage /> },
-        { path: 'accidents', element: <AccidentPage /> },
-        { path: 'tenders', element: <TenderPage /> },
+        { path: 'pothole', element: <PotholePage /> },
+        { path: 'manhole', element: <ManholePage /> },
+        { path: 'street-light', element: <StreetLightPage /> },
+        { path: 'my-tenders', element: <TenderPage /> },
+        { path: 'application', element: <ApplicationPage /> },
         // { path: 'products', element: <ProductsPage /> },
         // { path: 'blog', element: <BlogPage /> },
       ],

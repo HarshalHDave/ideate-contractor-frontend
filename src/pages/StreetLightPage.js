@@ -16,10 +16,8 @@ import USERLIST from '../_mock/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-    { id: 'id', label: 'Quote', alignRight: false },
+    { id: 'id', label: 'ID', alignRight: false },
     { id: 'text', label: 'Description', alignRight: false },
-    // { id: 'pocnum', label: 'Vendor Number', alignRight: false },
-    // { id: 'pocname', label: 'Vendor Name', alignRight: false },
     { id: 'status', label: 'Status', alignRight: false },
     { id: '', label: 'See Map' },
     { id: '', label: 'More' },
@@ -51,12 +49,12 @@ function applySortFilter(array, comparator, query) {
         return a[1] - b[1];
     });
     if (query) {
-        return filter(array, (_user) => _user.text.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+        return filter(array, (_user) => _user.id.toLowerCase().indexOf(query.toLowerCase()) !== -1 || _user.text.toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function TenderPage() {
+export default function StreetLightPage() {
     const [open, setOpen] = useState(null);
 
     const [page, setPage] = useState(0);
@@ -85,28 +83,28 @@ export default function TenderPage() {
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = USERLIST.map((n) => n.text);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
+    // const handleSelectAllClick = (event) => {
+    //   if (event.target.checked) {
+    //     const newSelecteds = USERLIST.map((n) => n.text);
+    //     setSelected(newSelecteds);
+    //     return;
+    //   }
+    //   setSelected([]);
+    // };
 
     const handleClick = (event, text) => {
-        const selectedIndex = selected.indexOf(text);
-        let newSelected = [];
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, text);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-        }
-        setSelected(newSelected);
+      const selectedIndex = selected.indexOf(text);
+      let newSelected = [];
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, text);
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+      }
+      setSelected(newSelected);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -132,16 +130,16 @@ export default function TenderPage() {
     return (
         <>
             <Helmet>
-                <title> Tenders </title>
+                <title> Street Light Issues </title>
             </Helmet>
 
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" gutterBottom>
-                       Tenders
+                        Street Light Problems
                     </Typography>
                     <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                        Create a tender
+                        Add Problem
                     </Button>
                 </Stack>
 
@@ -161,29 +159,25 @@ export default function TenderPage() {
                                 />
                                 <TableBody>
                                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                        const { id, text, pocname, status, pocnum, avatarUrl } = row;
+                                        const { id, text, status, avatarUrl } = row;
                                         const selectedUser = selected.indexOf(text) !== -1;
 
                                         return (
                                             <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                                                 <TableCell padding="checkbox">
-                                                    {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, text)} /> */}
+                                                    <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, text)} />
                                                 </TableCell>
 
                                                 <TableCell component="th" scope="row" padding="none">
                                                     <Stack direction="row" alignItems="center" spacing={2}>
+                                                        <Avatar alt={text} src={avatarUrl} />
                                                         <Typography variant="subtitle2" noWrap>
-                                                            ₹ {id}
+                                                            {id}
                                                         </Typography>
                                                     </Stack>
                                                 </TableCell>
 
                                                 <TableCell align="left">{text}</TableCell>
-
-                                                {/* <TableCell align="left">{pocnum}</TableCell> */}
-
-                                                {/* <TableCell align="left">{pocname}</TableCell> */}
-
 
                                                 <TableCell align="left">
                                                     <Label color={(status === 'unresolved' && 'error') || 'success'}>{sentenceCase(status)}</Label>
@@ -267,16 +261,15 @@ export default function TenderPage() {
                     },
                 }}
             >
-                <MenuItem>
-                    <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-                    Edit
+                <MenuItem sx={{ color: 'success.main' }}>
+                    <Iconify icon={'material-symbols:edit-document-outline-rounded'} sx={{ mr: 2 }} />
+                    Apply
                 </MenuItem>
-
+                
                 <MenuItem sx={{ color: 'error.main' }}>
-                    <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-                    Delete
+                    <Iconify icon={'fluent-emoji-high-contrast:cross-mark'} sx={{ mr: 2 }} />
+                    Unresolve
                 </MenuItem>
-
             </Popover>
         </>
     );

@@ -17,7 +17,6 @@ import USERLIST from '../_mock/user';
 
 const TABLE_HEAD = [
   { id: 'id', label: 'ID', alignRight: false },
-  { id: 'type', label: 'Type', alignRight: false },
   { id: 'text', label: 'Description', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: '', label: 'See Map' },
@@ -50,12 +49,12 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.id.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.id.toLowerCase().indexOf(query.toLowerCase()) !== -1 || _user.text.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function RoadIssuePage() {
+export default function PotholePage() {
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -64,7 +63,7 @@ export default function RoadIssuePage() {
 
   const [selected, setSelected] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('text');
+  const [orderBy, setOrderBy] = useState('id');
 
   const [filterName, setFilterName] = useState('');
 
@@ -93,20 +92,20 @@ export default function RoadIssuePage() {
   //   setSelected([]);
   // };
 
-  // const handleClick = (event, text) => {
-  //   const selectedIndex = selected.indexOf(text);
-  //   let newSelected = [];
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, text);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-  //   }
-  //   setSelected(newSelected);
-  // };
+  const handleClick = (event, text) => {
+    const selectedIndex = selected.indexOf(text);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, text);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -131,16 +130,16 @@ export default function RoadIssuePage() {
   return (
     <>
       <Helmet>
-        <title> Road Issues </title>
+        <title> Pothole Issues </title>
       </Helmet>
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Issues related to Potholes, Manholes and Street Lights
+            Potholes
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Raise an Issue
+            Add pothole
           </Button>
         </Stack>
 
@@ -160,13 +159,13 @@ export default function RoadIssuePage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, type, text, status, avatarUrl } = row;
+                    const { id, text, status, avatarUrl } = row;
                     const selectedUser = selected.indexOf(text) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, text)} /> */}
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, text)} />
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
@@ -177,8 +176,6 @@ export default function RoadIssuePage() {
                             </Typography>
                           </Stack>
                         </TableCell>
-
-                        <TableCell align="left">{type}</TableCell>
 
                         <TableCell align="left">{text}</TableCell>
 
@@ -265,13 +262,13 @@ export default function RoadIssuePage() {
         }}
       >
         <MenuItem sx={{ color: 'success.main' }}>
-          <Iconify icon={'material-symbols:done-rounded'} sx={{ mr: 2 }} />
-          Resolved
+          <Iconify icon={'material-symbols:edit-document-outline-rounded'} sx={{ mr: 2 }} />
+          Apply
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
+          <Iconify icon={'fluent-emoji-high-contrast:cross-mark'} sx={{ mr: 2 }} />
+          Unresolve
         </MenuItem>
       </Popover>
     </>
