@@ -60,15 +60,15 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_aX6P9cmyNKvrfzR6KKymLcHq8pfwDri2p25QeTQ&s"} alt="photoURL" />
+            <Avatar src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQb0PND9_VIQLVf60BJheTWNgPRhzU1OyebA&usqp=CAU"} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Govt. Of India
+                Larsen & Toubro
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Main Admin
+                Contractor
               </Typography>
             </Box>
           </StyledAccount>

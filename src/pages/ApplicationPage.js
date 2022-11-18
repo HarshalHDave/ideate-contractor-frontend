@@ -138,10 +138,10 @@ export default function ApplicationPage() {
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" gutterBottom>
-                        Tenders
+                        My Applications
                     </Typography>
                     <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                        Create a tender
+                        New Application
                     </Button>
                 </Stack>
 

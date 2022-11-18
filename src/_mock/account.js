@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Govt. Of India',
-  email: 'modiji@gov.in',
-  photoURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_aX6P9cmyNKvrfzR6KKymLcHq8pfwDri2p25QeTQ&s',
+  displayName: 'Larsen & Toubro',
+  email: 'contractors@lnt.com',
+  photoURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQb0PND9_VIQLVf60BJheTWNgPRhzU1OyebA&usqp=CAU',
 };
 
 export default account;
