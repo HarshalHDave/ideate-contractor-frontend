@@ -2,8 +2,9 @@ import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
+import Multiselect from 'multiselect-react-dropdown';
 // @mui
-import { Card, Table, Stack, Paper, Avatar, Button, Popover, Checkbox, TableRow, MenuItem, TableBody, TableCell, Container, Typography, IconButton, TableContainer, TablePagination, } from '@mui/material';
+import { Card, Table, Stack, Paper, Avatar, Button, TextField, Popover, Checkbox, Modal, Box, Grid, TableRow, MenuItem, TextareaAutosize, InputLabel, TableBody, TableCell, Container, Typography, IconButton, TableContainer, TablePagination, } from '@mui/material';
 // components
 import Label from '../components/label';
 import Iconify from '../components/iconify';
@@ -58,6 +59,8 @@ function applySortFilter(array, comparator, query) {
 
 export default function TenderPage() {
     const [open, setOpen] = useState(null);
+    const [openAdd, setOpenAdd] = useState(false);
+    const [issues, setIssues] = useState(false);
 
     const [page, setPage] = useState(0);
 
@@ -129,19 +132,115 @@ export default function TenderPage() {
 
     const isNotFound = !filteredUsers.length && !!filterName;
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        borderRadius: '10px',
+        boxShadow: 24,
+        p: 4,
+    };
+
     return (
         <>
             <Helmet>
                 <title> Tenders </title>
             </Helmet>
 
+            <Modal
+                open={openAdd}
+                onClose={() => setOpenAdd(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Multiselect
+                                displayValue="subcategory"
+                                groupBy="category"
+                                placeholder="Select Tender"
+                                // eslint-disable-next-line react/jsx-boolean-value
+                                singleSelect={true}
+                                onRemove={(selectedList) => setIssues(selectedList)}
+                                onSelect={(selectedList) => setIssues(selectedList)}
+                                options={[
+                                    {
+                                        category: 'Tendors',
+                                        subcategory: '5321, 6565, 6546, 7412, 8452'
+                                    },
+                                    {
+                                        category: 'Tendors',
+                                        subcategory: '9456, 1564, 1415'
+                                    },
+                                    {
+                                        category: 'Tendors',
+                                        subcategory: '7415, 4654, 1222, 4655, 7445'
+                                    },
+                                    {
+                                        category: 'Tendors',
+                                        subcategory: '8459, 4565, 6514, 6513, 9844, 3213'
+                                    }
+                                ]}
+                                showCheckbox
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField id="outlined-basic" label="Quote" variant="outlined" />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="outlined-multiline-flexible"
+                                label="Description"
+                                multiline
+                                maxRows={4}
+                                // value={value}
+                                // onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={3}>
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        onClick={() => {
+                                            // handleRaiseIssue();
+                                            setOpenAdd(false);
+                                        }}
+                                    >
+                                        Done
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        onClick={() => {
+                                            setOpenAdd(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Modal>
+
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" gutterBottom>
-                       Tenders
+                        Tenders
                     </Typography>
-                    <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                        Create a tender
+                    <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={() => {
+                        setOpenAdd(true);
+                    }}>
+                        Apply Tender
                     </Button>
                 </Stack>
 
