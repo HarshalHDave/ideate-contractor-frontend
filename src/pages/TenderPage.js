@@ -11,7 +11,7 @@ import Scrollbar from '../components/scrollbar';
 // sections
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/user';
+import USERLIST from '../_mock/tender';
 
 // ----------------------------------------------------------------------
 
@@ -186,7 +186,7 @@ export default function TenderPage() {
 
 
                                                 <TableCell align="left">
-                                                    <Label color={(status === 'unresolved' && 'error') || 'success'}>{sentenceCase(status)}</Label>
+                                                    <Label color={status === 'Submitted' ? 'warning' : status === 'Accepted' ? 'success' : 'error'}>{sentenceCase(status)}</Label>
                                                 </TableCell>
 
                                                 <TableCell align="left">

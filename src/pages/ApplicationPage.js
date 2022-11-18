@@ -11,7 +11,7 @@ import Scrollbar from '../components/scrollbar';
 // sections
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/user';
+import USERLIST from '../_mock/aplication';
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ export default function ApplicationPage() {
 
     const [selected, setSelected] = useState([]);
 
-    const [orderBy, setOrderBy] = useState('text');
+    const [orderBy, setOrderBy] = useState('id');
 
     const [filterName, setFilterName] = useState('');
 
@@ -186,7 +186,7 @@ export default function ApplicationPage() {
 
 
                                                 <TableCell align="left">
-                                                    <Label color={(status === 'unresolved' && 'error') || 'success'}>{sentenceCase(status)}</Label>
+                                                    <Label color={status === 'Submitted' ? 'warning' : status === 'Accepted' ? 'success' : 'error'}>{sentenceCase(status)}</Label>
                                                 </TableCell>
 
                                                 <TableCell align="left">

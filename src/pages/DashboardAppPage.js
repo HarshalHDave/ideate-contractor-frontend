@@ -64,7 +64,11 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Potholes" total={714000} icon={'fluent-emoji-high-contrast:hole'} />
+            <AppWidgetSummary title="Applications & Tenders Submitted" total={234} icon={'mdi:file-document-box-multiple-outline'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="Potholes" total={714000} color="info" icon={'fluent-emoji-high-contrast:hole'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
@@ -72,16 +76,13 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Street Lights" total={1723315} color="warning" icon={'game-icons:double-street-lights'} />
+            <AppWidgetSummary title="Street Lights" total={1723315} color="info" icon={'game-icons:double-street-lights'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Accidents" total={234} color="error" icon={'maki:road-accident'} />
-          </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="User Reporting"
+              title="Issues Reporting"
               subheader="(+43%) than last year"
               chartLabels={[
                 '01/01/2022',
@@ -98,22 +99,10 @@ export default function DashboardAppPage() {
               ]}
               chartData={[
                 {
-                  name: 'Users',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
                   name: 'User Reporting',
                   type: 'line',
                   fill: 'solid',
                   data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
-                {
-                  name: 'Contractors',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [40, 50, 35, 42, 32, 50, 31, 41, 26, 23, 53],
                 },
                 {
                   name: 'Contractor Reporting',
@@ -127,31 +116,35 @@ export default function DashboardAppPage() {
                   fill: 'solid',
                   data: [42, 12, 36, 40, 35, 23, 45, 16, 48, 41, 62],
                 },
+                {
+                  name: 'Your Reporting',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [12, 8, 14, 16, 18, 20, 31, 42, 35, 45, 62],
+                },
               ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Visits"
+              title="Current Issues"
               chartData={[
                 { label: 'Potholes', value: 4344 },
                 { label: 'Manholes', value: 545 },
                 { label: 'Street Lights', value: 1443 },
-                { label: 'Accidents', value: 443 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
                 theme.palette.info.main,
                 theme.palette.warning.main,
-                theme.palette.error.main,
               ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppNewsUpdate
-              title="Recent Tenders"
+              title="Applied Tenders"
               list={[...Array(5)].map(() => ({
                 id: faker.datatype.uuid(),
                 title: faker.name.jobTitle(),
@@ -170,7 +163,7 @@ export default function DashboardAppPage() {
                   '12 Tender requests recived',
                   '126 Potholes reported',
                   '21 Manholes reported',
-                  '4 Accidnets reported',
+                  '4 Accidnets occured',
                 ][index],
                 type: `order${index + 1}`,
                 time: faker.date.past(),
@@ -181,11 +174,11 @@ export default function DashboardAppPage() {
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
               title="Current Reporting"
-              chartLabels={['Potholes', 'Manholes', 'Street Lights', 'Accidents']}
+              chartLabels={['Potholes', 'Manholes', 'Street Lights']}
               chartData={[
-                { name: 'Users', data: [80, 50, 30, 40] },
-                { name: 'Contractors', data: [20, 30, 40, 80] },
-                { name: 'Government', data: [44, 76, 78, 13] },
+                { name: 'Users', data: [80, 50, 30] },
+                { name: 'Contractors', data: [20, 30, 40] },
+                { name: 'Government', data: [44, 76, 78] },
               ]}
               chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
             />
